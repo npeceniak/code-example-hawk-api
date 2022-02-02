@@ -1,0 +1,16 @@
+curl -d '{
+    "behaviorDescription": "fast",
+    "colorDescription": "Black",
+    "gender": "MALE",
+    "habitatDescription": "trees",
+    "id": 1,
+    "lengthBegin": 5,
+    "lengthEnd": 10,
+    "name": "BlackHawk",
+    "pictureUrl": "https://en.wikipedia.org/wiki/Chicago_Blackhawks#/media/File:Chicago_Blackhawks_logo.svg",
+    "size": "LARGE",
+    "weightBegin": 10,
+    "weightEnd": 50,
+    "wingspanBegin": 3,
+    "wingspanEnd": 8
+}' -H "Content-Type: application/json" -X POST http://localhost:8000/api/hawk
