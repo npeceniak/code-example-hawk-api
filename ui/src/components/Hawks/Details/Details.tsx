@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import "./Details.css";
+import axios from 'axios';
 
-const Details: React.FC = (props) => {
+const Details: React.FC = () => {
     const [name, setName] = useState("");
-    const [size, setSize] = useState("");
-    const [gender, setGender] = useState("");
+    const [size, setSize] = useState("SMALL");
+    const [gender, setGender] = useState("MALE");
     const [length, setLength] = useState<{ from: number, to: number }>({ from: 0, to: 0 });
     const [wingspan, setWingspan] = useState<{ from: number, to: number }>({ from: 0, to: 0 });
     const [weight, setWeight] = useState<{ from: number, to: number }>({ from: 0, to: 0 });
@@ -15,21 +16,56 @@ const Details: React.FC = (props) => {
 
 
 
-    const onSubmit = (event: any) => {
+    const onSubmit = async (event: any) => {
         event.preventDefault();
-        // console.log(event);
-        // console.log(filter);
 
         // Logic for creating or updateing existing hawk
 
         console.log("Name:", name);
         console.log("Size:", size);
+        console.log("gender:", gender);
         console.log("length:", length);
+        console.log("wingspan:", wingspan);
+        console.log("weight:", weight);
+        console.log("url:", url);
+        console.log("color:", color);
+        console.log("behavior:", behavior);
+        console.log("habitat:", habitat);
+
+        const idToUpdate = 3;
+        const data = {
+            "behaviorDescription": behavior,
+            "colorDescription": color,
+            "gender": gender,
+            "habitatDescription": habitat,
+            "lengthBegin": length.from,
+            "lengthEnd": length.to,
+            "name": name,
+            "pictureUrl": url,
+            "size": size,
+            "weightBegin": weight.from,
+            "weightEnd": weight.to,
+            "wingspanBegin": wingspan.from,
+            "wingspanEnd": wingspan.to
+        }
+
+        const response = await axios.put(`http://localhost:8000/api/hawk/${idToUpdate}`, data);
+        console.log(response);
 
         // reset form...
         setName("");
-        setSize("");
+        setSize("SMALL");
+        setGender("MALE");
         setLength({ from: 0, to: 0 });
+        setWingspan({ from: 0, to: 0 });
+        setWeight({ from: 0, to: 0 });
+        setUrl("");
+        setColor("");
+        setBehavior("");
+        setHabitat("");
+
+
+        // if new send create request if updating send update request.
 
     }
 
