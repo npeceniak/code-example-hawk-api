@@ -1,0 +1,34 @@
+table.displayTable {
+    border: 2px solid #A40808;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+table.displayTable td, table.displayTable th {
+    border: 5px solid #A73F2D;
+    padding: 3px 2px;
+}
+
+table.displayTable tr:nth-child(even) {
+    background: #D59287;
+}
+
+table.displayTable tr:nth-child(odd) {
+    background: #B4AEAE;
+}
+
+.viewButton {
+	background-color:#a73f2d;
+	border-radius:17px;
+	border:2px solid #241d13;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:4px 8px;
+	text-decoration:none;
+}

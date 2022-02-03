@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import "./DisplayContainer.css";
 
 enum gender {
-    "MALE",
-    "FEMALE"
+    male = "MALE",
+    female = "FEMALE"
 }
 
 enum size {
-    "SMALL",
-    "MEDIUM",
-    "LARGE"
+    small = "SMALL",
+    medium = "MEDIUM",
+    large = "LARGE"
 }
 
 interface IHawk {
@@ -28,10 +29,10 @@ interface IHawk {
     wingspanEnd: number
 }
 
-const Details: React.FC = (props: any) => {
+const Details: React.FC = () => {
     return (
-        <button>
-            Details
+        <button className='viewButton'>
+            View &gt;&gt;
         </button>
     )
 }
@@ -39,9 +40,13 @@ const Details: React.FC = (props: any) => {
 const Table: React.FC = () => {
     const [state, setState] = useState<IHawk[]>([]);
     const getHawkList = async () => {
-        const response = await axios.get(`http://localhost:8000/api/hawk/list`);
-        console.log(response);
-        setState(response.data.hawks)
+        try{
+            const response = await axios.get(`http://localhost:8000/api/hawk/list`);
+            console.log(response);
+            setState(response.data.hawks)
+        } catch(e) {
+            console.error("API Fetch Called Failed", e);
+        }
     }
 
     useEffect(() => {
@@ -49,12 +54,13 @@ const Table: React.FC = () => {
     }, []);
 
     return (
-        <table>
+        <table className="displayTable">
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Size</th>
                     <th>Gender</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

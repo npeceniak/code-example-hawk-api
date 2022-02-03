@@ -1,0 +1,20 @@
+.addHawkButton {
+	background-color:#a73f2d;
+	border-radius:17px;
+	border:2px solid #241d13;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:18px;
+	font-weight:bold;
+	padding:8px 16px;
+	text-decoration:none;
+}
+.addHawkButton:hover {
+	background-color:#b34332;
+}
+.addHawkButton:active {
+	position:relative;
+	top:1px;
+}

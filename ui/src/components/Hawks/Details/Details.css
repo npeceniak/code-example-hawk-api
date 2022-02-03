@@ -1,0 +1,88 @@
+.saveButton {
+	background-color:#a73f2d;
+	border-radius:17px;
+	border:2px solid #241d13;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:20px;
+	font-weight:bold;
+	padding:4px 8px;
+    margin: 8px 0px 8px 330px;
+}
+
+.saveButton:hover {
+	background-color:#b34332;
+}
+
+.saveButton:active {
+	position:relative;
+	top:1px;
+}
+
+label {
+    background-color:#a73f2d;
+	border-radius:17px;
+	border:2px solid #241d13;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:4px 8px;
+    margin: 2px;
+}
+
+.genericInput {
+    padding: 5px;
+    font-size: 13px;
+    border-width: 3px;
+    border-color: #a73f2d;
+    border-style: solid;
+    margin: 2px;
+}
+
+.selectInput {
+    width: 80px;
+    text-align: center;
+}
+
+.numberInput {
+    width: 40px;
+}
+
+.textInput {
+    width: 250px;
+}
+
+.textAreaInput {
+    resize: vertical;
+    width: 350px;
+    margin-left: 20px;
+}
+
+.detailsForm {
+    background-color: #B4AEAE;;
+    border-width: 2px;
+    border-color: #a73f2d;
+    border-style: solid;
+    margin: 3px;
+    padding: 7px;
+    width: 410px;
+}
+
+.descriptionLabel {
+    width: 155px;
+    text-align: center;
+}
+
+.uniformLabel {
+    width: 80px;
+    text-align: center;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1;
+}
