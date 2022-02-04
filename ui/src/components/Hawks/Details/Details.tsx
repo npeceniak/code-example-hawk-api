@@ -67,7 +67,7 @@ const Details: React.FC = (props: any) => {
                 response = await axios.post(`http://localhost:8000/api/hawk`, data);
             }
 
-            response =await axios.get(`http://localhost:8000/api/hawk/list`);
+            response = await axios.get(`http://localhost:8000/api/hawk/list`);
             props.setHawkList(response.data.hawks)
             props.deactivateDetails();
             props.setDetails(null);
