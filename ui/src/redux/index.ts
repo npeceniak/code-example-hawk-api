@@ -1,1 +1,1 @@
-export { activateDetails, deactivateDetails } from "./detailsActions"
+export { activateDetails, deactivateDetails, setDetails, setHawkList  } from "./detailsActions"

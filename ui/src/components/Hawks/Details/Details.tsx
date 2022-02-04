@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Details.css";
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { deactivateDetails } from '../../../redux';
+import { deactivateDetails, setDetails, setHawkList } from '../../../redux/detailsActions';
 
 const Details: React.FC = (props: any) => {
     const [name, setName] = useState("");
@@ -15,6 +15,31 @@ const Details: React.FC = (props: any) => {
     const [color, setColor] = useState("");
     const [behavior, setBehavior] = useState("");
     const [habitat, setHabitat] = useState("");
+
+    const getHawkDetails = async () => {
+        if(props.detailsId !== null) {
+            try{
+                const response = await axios.get(`http://localhost:8000/api/hawk/${props.detailsId}`);
+                const details = response.data;
+                setName(details.name);
+                setSize(details.size);
+                setGender(details.gender);
+                setLength({ from: details.lengthBegin, to: details.lengthEnd });
+                setWingspan({ from: details.wingspanBegin, to: details.wingspanEnd });
+                setWeight({ from: details.weightBegin, to: details.weightEnd });
+                setUrl(details.pictureUrl);
+                setColor(details.colorDescription);
+                setBehavior(details.behaviorDescription);
+                setHabitat(details.habitatDescription);
+            } catch(e) {
+                console.error("API Fetch Called Failed", e);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getHawkDetails();
+    }, []);
 
     const onSubmit = async (event: any) => {
         event.preventDefault();        
@@ -34,30 +59,23 @@ const Details: React.FC = (props: any) => {
             "wingspanEnd": wingspan.to
         }
 
- 
-        const idToUpdate = null;
-        // idToUpdate will eventually be read from state to make this decision.
-        if(idToUpdate){
-            const response = await axios.put(`http://localhost:8000/api/hawk/${idToUpdate}`, data);
+        if(props.detailsId !== null) {
+            const response = await axios.put(`http://localhost:8000/api/hawk/${props.detailsId}`, data);
             console.log(response);
         } else {
             const response = await axios.post(`http://localhost:8000/api/hawk`, data);
             console.log(response);
         }
 
-        // reset form
-        setName("");
-        setSize("SMALL");
-        setGender("MALE");
-        setLength({ from: 0, to: 0 });
-        setWingspan({ from: 0, to: 0 });
-        setWeight({ from: 0, to: 0 });
-        setUrl("");
-        setColor("");
-        setBehavior("");
-        setHabitat("");
+        try{
+            const response = await axios.get(`http://localhost:8000/api/hawk/list`);
+            props.setHawkList(response.data.hawks)
+        } catch(e) {
+            console.error("API Fetch Called Failed", e);
+        }
 
         props.deactivateDetails();
+        props.setDetails(null);
     }
 
     return (
@@ -174,13 +192,16 @@ const Details: React.FC = (props: any) => {
 
 const mapStateToProps = (state: any) => {
     return {
-        detailsActive: state.detailsActive
+        detailsActive: state.detailsActive,
+        detailsId: state.detailsId,
     }
 };
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        deactivateDetails: () => dispatch(deactivateDetails())
+        deactivateDetails: () => dispatch(deactivateDetails()),
+        setDetails: (id: number | null) => dispatch(setDetails(id)),
+        setHawkList: (hawkList: any) => dispatch(setHawkList(hawkList))
     }
 };
 

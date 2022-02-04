@@ -1,49 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import "./DisplayContainer.css";
+import { activateDetails, setDetails, setHawkList } from '../../../redux/detailsActions';
+import { connect } from 'react-redux';
 
-enum gender {
-    male = "MALE",
-    female = "FEMALE"
-}
-
-enum size {
-    small = "SMALL",
-    medium = "MEDIUM",
-    large = "LARGE"
-}
-
-interface IHawk {
-    behaviorDescription: string,
-    colorDescription: string,
-    gender: gender,
-    habitatDescription: string,
-    id: number,
-    lengthBegin: number,
-    lengthEnd: number,
-    name: string,
-    size: size,
-    weightBegin: number,
-    weightEnd: number,
-    wingspanBegin: number,
-    wingspanEnd: number
-}
-
-const Details: React.FC = () => {
+const Details: React.FC<{id: number, store: any}> = (props: any) => {
+    const onClick = () => {
+        props.store.setDetails(props.id);
+        props.store.activateDetails();
+    }
     return (
-        <button className='viewButton'>
+        <button onClick={onClick} className='viewButton'>
             View &gt;&gt;
         </button>
     )
-}
+};
 
-const Table: React.FC = () => {
-    const [state, setState] = useState<IHawk[]>([]);
+const Table: React.FC<{store: any}> = (props: any) => {
     const getHawkList = async () => {
         try{
             const response = await axios.get(`http://localhost:8000/api/hawk/list`);
-            console.log(response);
-            setState(response.data.hawks)
+            props.store.setHawkList(response.data.hawks)
         } catch(e) {
             console.error("API Fetch Called Failed", e);
         }
@@ -64,25 +41,43 @@ const Table: React.FC = () => {
                 </tr>
             </thead>
             <tbody>
-                {state.map(hawk => (
+                {props.store.hawkList.map((hawk: any) => (
                     <tr key={hawk.id}>
                         <td>{hawk.name}</td>
                         <td>{hawk.size}</td>
                         <td>{hawk.gender}</td>
-                        <td><Details /></td>
+                        <td><Details id={hawk.id} store={props.store}/></td>
                     </tr>
                 ))}
             </tbody>
         </table>
     );
-}
+};
 
-const DisplayContainer: React.FC = () => {
+const DisplayContainer: React.FC = (props: any) => {
     return (
         <div className="displayContainer">
-            <Table />
+            <Table store={props}/>
         </div>
     );
-}
+};
 
-export default DisplayContainer;
+const mapStateToProps = (state: any) => {
+    return {
+        hawkList: state.hawkList
+    }
+};
+
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        activateDetails: () => dispatch(activateDetails()),
+        setDetails: (id: number) => dispatch(setDetails(id)),
+        setHawkList: (hawkList: any) => dispatch(setHawkList(hawkList))
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DisplayContainer);
