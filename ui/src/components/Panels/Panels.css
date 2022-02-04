@@ -1,0 +1,7 @@
+.leftPanel {
+    flex-basis: 100%;
+}
+
+.rightPanel {
+    flex-basis: 410px;
+}

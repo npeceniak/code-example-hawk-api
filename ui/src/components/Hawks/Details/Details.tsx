@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import "./Details.css";
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { deactivateDetails } from '../../../redux';
 
-const Details: React.FC = () => {
+const Details: React.FC = (props: any) => {
     const [name, setName] = useState("");
     const [size, setSize] = useState("SMALL");
     const [gender, setGender] = useState("MALE");
@@ -14,25 +16,8 @@ const Details: React.FC = () => {
     const [behavior, setBehavior] = useState("");
     const [habitat, setHabitat] = useState("");
 
-
-
     const onSubmit = async (event: any) => {
-        event.preventDefault();
-
-        // Logic for creating or updateing existing hawk
-
-        console.log("Name:", name);
-        console.log("Size:", size);
-        console.log("gender:", gender);
-        console.log("length:", length);
-        console.log("wingspan:", wingspan);
-        console.log("weight:", weight);
-        console.log("url:", url);
-        console.log("color:", color);
-        console.log("behavior:", behavior);
-        console.log("habitat:", habitat);
-
-        const idToUpdate = 3;
+        event.preventDefault();        
         const data = {
             "behaviorDescription": behavior,
             "colorDescription": color,
@@ -49,10 +34,18 @@ const Details: React.FC = () => {
             "wingspanEnd": wingspan.to
         }
 
-        const response = await axios.put(`http://localhost:8000/api/hawk/${idToUpdate}`, data);
-        console.log(response);
+ 
+        const idToUpdate = null;
+        // idToUpdate will eventually be read from state to make this decision.
+        if(idToUpdate){
+            const response = await axios.put(`http://localhost:8000/api/hawk/${idToUpdate}`, data);
+            console.log(response);
+        } else {
+            const response = await axios.post(`http://localhost:8000/api/hawk`, data);
+            console.log(response);
+        }
 
-        // reset form...
+        // reset form
         setName("");
         setSize("SMALL");
         setGender("MALE");
@@ -64,9 +57,7 @@ const Details: React.FC = () => {
         setBehavior("");
         setHabitat("");
 
-
-        // if new send create request if updating send update request.
-
+        props.deactivateDetails();
     }
 
     return (
@@ -181,4 +172,19 @@ const Details: React.FC = () => {
     );
 }
 
-export default Details;
+const mapStateToProps = (state: any) => {
+    return {
+        detailsActive: state.detailsActive
+    }
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        deactivateDetails: () => dispatch(deactivateDetails())
+    }
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Details);

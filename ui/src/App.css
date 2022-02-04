@@ -1,7 +1,8 @@
-a {
-  color: #00B9B3;
-}
-
 body {
     background-color: #403e3e;
+}
+
+.App {
+    display: flex;
+    width: 100%;
 }

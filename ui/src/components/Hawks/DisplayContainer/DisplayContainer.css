@@ -11,6 +11,10 @@ table.displayTable td, table.displayTable th {
     padding: 3px 2px;
 }
 
+table.displayTable th {
+    background: #D59287;
+}
+
 table.displayTable tr:nth-child(even) {
     background: #D59287;
 }

@@ -79,7 +79,7 @@ const Table: React.FC = () => {
 
 const DisplayContainer: React.FC = () => {
     return (
-        <div className="dispayContainer">
+        <div className="displayContainer">
             <Table />
         </div>
     );
