@@ -1,4 +1,9 @@
-import { ACTIVATE_DETAILS, DEACTIVATE_DETAILS, SET_DETAILS_ID, SET_HAWK_LIST } from "./detailsTypes";
+import {
+    ACTIVATE_DETAILS,
+    DEACTIVATE_DETAILS,
+    SET_DETAILS_ID,
+    SET_HAWK_LIST
+} from "./detailsTypes";
 
 export const activateDetails = () => {
     return {

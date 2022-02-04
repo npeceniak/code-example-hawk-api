@@ -59,23 +59,21 @@ const Details: React.FC = (props: any) => {
             "wingspanEnd": wingspan.to
         }
 
-        if(props.detailsId !== null) {
-            const response = await axios.put(`http://localhost:8000/api/hawk/${props.detailsId}`, data);
-            console.log(response);
-        } else {
-            const response = await axios.post(`http://localhost:8000/api/hawk`, data);
-            console.log(response);
-        }
-
         try{
-            const response = await axios.get(`http://localhost:8000/api/hawk/list`);
-            props.setHawkList(response.data.hawks)
-        } catch(e) {
-            console.error("API Fetch Called Failed", e);
-        }
+            let response;
+            if(props.detailsId !== null) {
+                response = await axios.put(`http://localhost:8000/api/hawk/${props.detailsId}`, data);
+            } else {
+                response = await axios.post(`http://localhost:8000/api/hawk`, data);
+            }
 
-        props.deactivateDetails();
-        props.setDetails(null);
+            response =await axios.get(`http://localhost:8000/api/hawk/list`);
+            props.setHawkList(response.data.hawks)
+            props.deactivateDetails();
+            props.setDetails(null);
+        } catch(e) {
+            console.error("API Called Failed", e);
+        }
     }
 
     return (
@@ -87,7 +85,6 @@ const Details: React.FC = (props: any) => {
                 value={name}
                 onChange={event => setName(event.target.value)}
             ></input><br />
-
             <label className="uniformLabel">Size</label>
             <select
                 className="genericInput selectInput"
@@ -97,7 +94,6 @@ const Details: React.FC = (props: any) => {
                 <option value="MEDIUM">Medium</option>
                 <option value="LARGE">Large</option>
             </select><br />
-
             <label className="uniformLabel">Gender</label>
             <select
                 className="genericInput selectInput"
@@ -106,8 +102,6 @@ const Details: React.FC = (props: any) => {
                 <option value="MALE">Male</option>
                 <option value="FEMALE">Female</option>
             </select><br />
-
-
             <label className="uniformLabel">Length</label><label>From</label>
             <input
                 className='genericInput numberInput'
@@ -123,7 +117,6 @@ const Details: React.FC = (props: any) => {
                 onChange={event => setLength({ ...length, to: event.target.valueAsNumber })}
             ></input>
             <label>cm</label><br />
-
             <label className="uniformLabel">Wingspan</label><label>From</label>
             <input
                 className='genericInput numberInput'
@@ -139,7 +132,6 @@ const Details: React.FC = (props: any) => {
                 onChange={event => setWingspan({ ...wingspan, to: event.target.valueAsNumber })}
             ></input>
             <label>cm</label><br />
-
             <label className="uniformLabel">Weight</label><label>From</label>
             <input
                 className='genericInput numberInput'
@@ -155,7 +147,6 @@ const Details: React.FC = (props: any) => {
                 onChange={event => setWeight({ ...weight, to: event.target.valueAsNumber })}
             ></input>
             <label>grams</label><br />
-
             <label className="uniformLabel">Url</label>
             <input
                 className="genericInput textInput"
@@ -163,28 +154,24 @@ const Details: React.FC = (props: any) => {
                 value={url}
                 onChange={event => setUrl(event.target.value)}
             ></input><br />
-
             <label className="descriptionLabel">Color Description</label><br />
             <textarea
                 className="genericInput textAreaInput"
                 value={color}
                 onChange={event => setColor(event.target.value)}
             ></textarea><br />
-
             <label className="descriptionLabel">Behavior Description</label><br />
             <textarea
                 className="genericInput textAreaInput"
                 value={behavior}
                 onChange={event => setBehavior(event.target.value)}
             ></textarea><br />
-
             <label className="descriptionLabel">Habitat Description</label><br />
             <textarea
                 className="genericInput textAreaInput"
                 value={habitat}
                 onChange={event => setHabitat(event.target.value)}
             ></textarea><br />
-
             <button className="saveButton">Save</button>
         </form>
     );

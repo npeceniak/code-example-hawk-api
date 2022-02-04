@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import "./Filter.css";
 
-const Filter: React.FC = (props) => {
+const Filter: React.FC = () => {
     const [filter, setFilter] = useState("");
     const onSubmit = (event: any) => {
         event.preventDefault();
-        console.log(event);
-        console.log(filter);
-
     }
     
     return (

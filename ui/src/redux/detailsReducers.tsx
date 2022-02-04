@@ -1,11 +1,16 @@
-import { ACTIVATE_DETAILS, DEACTIVATE_DETAILS, SET_DETAILS_ID, DetailsState, SET_HAWK_LIST } from "./detailsTypes";
+import { 
+    ACTIVATE_DETAILS,
+    DEACTIVATE_DETAILS, 
+    SET_DETAILS_ID,
+    DetailsState,
+    SET_HAWK_LIST
+} from "./detailsTypes";
 
 const initialState: DetailsState = {
     detailsActive: false,
     detailsId: null,
     hawkList: []
 }
-
 
 export const detailsReducer = (state = initialState, action: any): DetailsState => {
     switch (action.type) {
